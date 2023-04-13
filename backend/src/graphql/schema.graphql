@@ -1,0 +1,60 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  name: String!
+  password: String!
+  username: String!
+}
+
+type JwtPayloadResponse {
+  username: String!
+  password: String!
+  iat: BigInt!
+  exp: BigInt!
+  token: String
+}
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+type People {
+  name: String!
+  email: String!
+  address: String!
+  neighborhood: String!
+  cep: String!
+  rg: String!
+  cpf: String!
+  cns: String!
+  birthday: String!
+  cell: String!
+}
+
+type Query {
+  findUserByUsername(username: String!): User!
+  findAllUsers: [User!]!
+  findPeopleByName(name: String!): Boolean!
+  findAllPeoples: [People!]!
+}
+
+type Mutation {
+  createUser(userInput: CreateUserInput!): User!
+  deleteUser(username: String!): Boolean!
+  updateUser(username: String!, updatedUser: UpdateUserInput!): User!
+  login(username: String!, password: String!): JwtPayloadResponse!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+  name: String!
+}
+
+input UpdateUserInput {
+  password: String
+  name: String
+}
