@@ -72,15 +72,15 @@ def add_city_to_neo4j():
             """, city=city, state=state)
 
 
-def add_person_to_neo4j():
+def add_people_to_neo4j():
     df = pd.read_csv('people.csv', sep=';')
 
     rows = df.values.tolist()
     with driver.session() as session:
         for name, birthday, cpf, cns, rg, email, cell, cep, address, neighborhood, city_name, city_state in rows:
             # Create the person node and return id
-            person_id = session.run("""
-                CREATE (p:Person {name: $name, birthday: $birthday, cpf: $cpf, cns: $cns, rg: $rg, email: $email, 
+            people_id = session.run("""
+                CREATE (p:People {name: $name, birthday: $birthday, cpf: $cpf, cns: $cns, rg: $rg, email: $email, 
                                    cell: $cell, cep: $cep, address: $address, neighborhood: $neighborhood})
                 RETURN ID(p)
             """, name=name, birthday=birthday, cpf=cpf, cns=cns, rg=rg, email=email, cell=cell, cep=cep,
@@ -94,10 +94,10 @@ def add_person_to_neo4j():
 
             # Creates the relationship between the people and the city
             session.run("""
-                MATCH (p:Person), (c:City)
-                WHERE id(p) = $person_id AND id(c) = $city_id
+                MATCH (p:People), (c:City)
+                WHERE id(p) = $people_id AND id(c) = $city_id
                 CREATE (p)-[:LIVES_IN]->(c)
-            """, person_id=person_id, city_id=city_id)
+            """, people_id=people_id, city_id=city_id)
 
 
 def add_distance_city_to_neo4j():
@@ -213,5 +213,5 @@ if __name__ == '__main__':
     scrape_person()
     add_states_to_neo4j()
     add_city_to_neo4j()
-    add_person_to_neo4j()
+    add_people_to_neo4j()
     add_distance_city_to_neo4j()
