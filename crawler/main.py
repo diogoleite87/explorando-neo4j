@@ -72,7 +72,7 @@ def add_city_to_neo4j():
             """, city=city, state=state)
 
 
-def add_people_to_neo4j():
+def add_person_to_neo4j():
     df = pd.read_csv('people.csv', sep=';')
 
     rows = df.values.tolist()
@@ -213,5 +213,5 @@ if __name__ == '__main__':
     scrape_person()
     add_states_to_neo4j()
     add_city_to_neo4j()
-    add_people_to_neo4j()
+    add_person_to_neo4j()
     add_distance_city_to_neo4j()
