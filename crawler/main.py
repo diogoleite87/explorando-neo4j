@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-NUMBER_PEOPLES = 10
+NUMBER_PEOPLES = 100
 
 driver = GraphDatabase.driver(os.getenv("DATABASE_URL_CONNECTION"), auth=(
     os.getenv("DATABASE_USERNAME"), os.getenv("DATABASE_PASSWORD")))
@@ -170,7 +170,7 @@ def scrape_person():
 
                 # click the "Gerar Pessoa" button
                 generate_person_btn.click()
-                # time.sleep(1)  # wait for the new person to be generated
+                time.sleep(1)  # wait for the new person to be generated
 
                 # extract the data from each field
                 name = driver.find_element(By.ID, "nv-field-name").text
